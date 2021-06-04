@@ -35,13 +35,16 @@ public class WebsiteApplication implements CommandLineRunner {
 	@Override
 	public void run(String... strings) throws Exception {
 		//Search for a flight
-//		SearchQuery searchQuery = new SearchQuery("NYC","SFO","22-JAN-18");
+		SearchQuery searchQuery2 = new SearchQuery("NYC","SFO","22-JAN-18");
 		SearchQuery searchQuery = new SearchQuery("SEA","SFO","22-JAN-16");
 //		Flight[] flights = searchClient.postForObject("http://localhost:8083/search/get", searchQuery, Flight[].class); // chapter 6
+		Flight[] flights2 = searchClient.postForObject("http://localhost:8090/search/get", searchQuery2, Flight[].class);
 		Flight[] flights = searchClient.postForObject("http://localhost:8090/search/get", searchQuery, Flight[].class); // chapter 7
 
 		//Flight[] flights = searchClient.postForObject("http://localhost:8083/search/get", searchQuery, Flight[].class);
 
+
+//		ㅈㅜ석 처리하면 config server, search, website 으로만 스프링 cloud config 기능을 간단하게 테스트할수있다.
 		Arrays.asList(flights).forEach(flight -> logger.info(" flight >"+ flight));
 
 		//create a booking only if there are flights.
