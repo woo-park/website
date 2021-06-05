@@ -6,6 +6,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -13,7 +16,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @SpringBootApplication
-
 @EnableDiscoveryClient
 public class WebsiteApplication implements CommandLineRunner {
 	private static final Logger logger = LoggerFactory.getLogger(WebsiteApplication.class);
@@ -80,4 +82,16 @@ public class WebsiteApplication implements CommandLineRunner {
 			logger.error("CHECK IN SERVICE NOT AVAILABLE...!!!");
 		}
 	}
+}
+
+
+@Configuration
+class MyConfiguration {
+
+	@LoadBalanced
+	@Bean
+	RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
+
 }
