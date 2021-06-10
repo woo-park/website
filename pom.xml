@@ -16,7 +16,7 @@
 	</parent>
 	<groupId>com.microservice</groupId>
 	<artifactId>website</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>website</name>
 	<description>microservice website view template</description>
 	<properties>
@@ -35,6 +35,11 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
+
+		<dependency>
+			<groupId>com.netflix.eureka</groupId>
+			<artifactId>eureka-client</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

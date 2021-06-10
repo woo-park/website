@@ -64,13 +64,12 @@ public class BrownFieldSiteController {
 //		uiData.setFlights(Arrays.asList(flights));
 
 		// chapter 7 part 2
-		Flight[] flights = restClient.postForObject("http://searchservice/get", uiData.getSearchQuery(), Flight[].class);
-	   uiData.setFlights(Arrays.asList(flights));
-
+		Flight[] flights = restClient.postForObject("http://searchservice/search/get", uiData.getSearchQuery(), Flight[].class);
+		uiData.setFlights(Arrays.asList(flights));
 
 
 		model.addAttribute("uidata", uiData);
-       return "result";
+       	return "result";
    }
    
    @RequestMapping(value="/book/{flightNumber}/{origin}/{destination}/{flightDate}/{fare}", method=RequestMethod.GET)
@@ -124,7 +123,7 @@ public class BrownFieldSiteController {
 	public String searchBookingSubmit(@ModelAttribute UIData uiData, Model model) {
 		Long id = new Long(uiData.getBookingid());
 // 		BookingRecord booking = bookingClient.getForObject("http://localhost:8080/booking/get/"+id, BookingRecord.class);	//chapter 6
-		BookingRecord booking = bookingClient.getForObject("http://localhost:8060/booking/get/"+id, BookingRecord.class);	//chapter 7 part 1
+		BookingRecord booking = bookingClient.getForObject("http://127.0.0.1:8060/booking/get/"+id, BookingRecord.class);	//chapter 7 part 1
 		Flight flight = new Flight(booking.getFlightNumber(), booking.getOrigin(),booking.getDestination()
 				,booking.getFlightDate(),new Fares(booking.getFare(),"AED"));
 		Passenger pax = booking.getPassengers().iterator().next();
@@ -154,7 +153,7 @@ public class BrownFieldSiteController {
 
 //			long checkinId = checkInClient.postForObject("http://localhost:8081/checkin/create", checkIn, long.class); // chapter 6
 //		long checkinId = checkInClient.postForObject("http://localhost:8070/checkin/create", checkIn, long.class); // chapter 7 part 1
-			long checkinId = restClient.postForObject("http://checkinservice/checkin/creat", checkIn, long.class);
+			long checkinId = restClient.postForObject("http://checkinservice/checkin/create", checkIn, long.class);
 
 
 	   		model.addAttribute("message","Checked In, Seat Number is 28c , checkin id is "+ checkinId);
