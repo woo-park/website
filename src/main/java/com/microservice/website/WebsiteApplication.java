@@ -2,6 +2,7 @@ package com.microservice.website;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,8 +20,7 @@ import java.util.Set;
 @EnableDiscoveryClient
 public class WebsiteApplication implements CommandLineRunner {
 	private static final Logger logger = LoggerFactory.getLogger(WebsiteApplication.class);
-
-
+	
 	RestTemplate searchClient = new RestTemplate();
 
 	RestTemplate bookingClient = new RestTemplate();
@@ -40,8 +40,8 @@ public class WebsiteApplication implements CommandLineRunner {
 		SearchQuery searchQuery2 = new SearchQuery("NYC","SFO","22-JAN-18");
 		SearchQuery searchQuery = new SearchQuery("SEA","SFO","22-JAN-16");
 //		Flight[] flights = searchClient.postForObject("http://localhost:8083/search/get", searchQuery, Flight[].class); // chapter 6
-		Flight[] flights2 = searchClient.postForObject("http://61.78.78.132:8090/search/get", searchQuery2, Flight[].class);
-		Flight[] flights = searchClient.postForObject("http://61.78.78.132:8090/search/get", searchQuery, Flight[].class); // chapter 7
+		Flight[] flights2 = searchClient.postForObject("http://172.30.1.33:8090/search/get", searchQuery2, Flight[].class);
+		Flight[] flights = searchClient.postForObject("http://172.30.1.33:8090/search/get", searchQuery, Flight[].class); // chapter 7
 
 		//Flight[] flights = searchClient.postForObject("http://localhost:8083/search/get", searchQuery, Flight[].class);
 
@@ -64,7 +64,7 @@ public class WebsiteApplication implements CommandLineRunner {
 		try {
 			//long bookingId = bookingClient.postForObject("http://book-service/booking/create", booking, long.class);
 //			bookingId = bookingClient.postForObject("http://localhost:8080/booking/create", booking, long.class);
-			bookingId = bookingClient.postForObject("http://61.78.78.132:8060/booking/create", booking, long.class);
+			bookingId = bookingClient.postForObject("http://172.30.1.33:8060/booking/create", booking, long.class);
 			logger.info("Booking created "+ bookingId);
 		}catch (Exception e){
 			logger.error("BOOKING SERVICE NOT AVAILABLE...!!!");
@@ -75,7 +75,7 @@ public class WebsiteApplication implements CommandLineRunner {
 		try {
 			CheckInRecord checkIn = new CheckInRecord("Franc", "Gavin", "28C", null, "BF101","22-JAN-18", bookingId);
 //			long checkinId = checkInClient.postForObject("http://localhost:8081/checkin/create", checkIn, long.class);
-			long checkinId = checkInClient.postForObject("http://61.78.78.132:8070/checkin/create", checkIn, long.class);
+			long checkinId = checkInClient.postForObject("http://172.30.1.33:8070/checkin/create", checkIn, long.class);
 			logger.info("Franc Gavin 28C BF101 BookingId " + bookingId);
 			logger.info("Checked IN, checkedIn id:"+ checkinId);
 		}catch (Exception e){

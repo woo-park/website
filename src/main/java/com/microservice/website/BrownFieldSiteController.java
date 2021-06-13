@@ -123,7 +123,9 @@ public class BrownFieldSiteController {
 	public String searchBookingSubmit(@ModelAttribute UIData uiData, Model model) {
 		Long id = new Long(uiData.getBookingid());
 // 		BookingRecord booking = bookingClient.getForObject("http://localhost:8080/booking/get/"+id, BookingRecord.class);	//chapter 6
-		BookingRecord booking = bookingClient.getForObject("http://61.78.78.132:8060/booking/get/"+id, BookingRecord.class);	//chapter 7 part 1
+//		BookingRecord booking = bookingClient.getForObject("http://61.78.78.132:8060/booking/get/"+id, BookingRecord.class);	//chapter 7 part 1
+		BookingRecord booking = bookingClient.getForObject("http://bookservice/booking/get/"+id, BookingRecord.class);	//chapter 7 part 2
+
 		Flight flight = new Flight(booking.getFlightNumber(), booking.getOrigin(),booking.getDestination()
 				,booking.getFlightDate(),new Fares(booking.getFare(),"AED"));
 		Passenger pax = booking.getPassengers().iterator().next();
